@@ -7,7 +7,7 @@ inputs:
   required-reviewers:
     description: 'Comma-separated list of required reviewers'
     required: true
-  requiredLabels:
+  required-labels:
     description: 'Comma-separated list of required labels'
     required: true
   comment-message:
