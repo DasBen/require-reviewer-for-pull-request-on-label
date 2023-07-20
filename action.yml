@@ -1,0 +1,18 @@
+name: 'Check Reviewers'
+description: 'Checks if a pull request has the required reviewers'
+inputs:
+  github-token:
+    description: 'GitHub token'
+    required: true
+  required-reviewers:
+    description: 'Comma-separated list of required reviewers'
+    required: true
+  labels:
+    description: 'Comma-separated list of required labels'
+    required: true
+  comment-message:
+    description: 'Custom comment message (optional)'
+    required: false
+runs:
+  using: 'node12'
+  main: 'check-reviewers.js'

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "labels": [
+    "renovate",
+    "release:patch"
+  ],
+  "stabilityDays": 5,
+  "vulnerabilityAlerts": {
+    "labels": ["security"]
+  },
+  "assignees": ["DasBen"]
+}
