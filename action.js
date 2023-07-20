@@ -37,8 +37,8 @@ async function run() {
         const labels = pullRequest.data.labels.map((label) => label.name);
         core.debug(`Pull Request Labels: ${labels.join(', ')}`);
 
-        // Check if the pull request has the required labels
-        const hasRequiredLabels = requiredLabels.every((requiredLabel) => labels.includes(requiredLabel));
+        // Check if the pull request has some of the required labels
+        const hasRequiredLabels = requiredLabels.some((requiredLabel) => labels.includes(requiredLabel));
         core.debug(`Has Required Labels: ${hasRequiredLabels}`);
 
         if (hasRequiredLabels) {
