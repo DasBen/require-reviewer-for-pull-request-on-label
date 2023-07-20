@@ -26,11 +26,14 @@ async function run() {
         // Get the Octokit client using the provided token
         const octokit = getOctokit(token);
 
-        // Get the owner, repo, and pull request number from the environment variables
-        const owner = process.env.GITHUB_REPOSITORY.split('/')[0];
-        const repo = process.env.GITHUB_REPOSITORY.split('/')[1];
-        const number = process.env.GITHUB_EVENT_NUMBER;
-        core.debug(`Owner: ${owner}, Repo: ${repo}, Number: ${number}`);
+        // Get the owner and repo from the context
+        const owner = context.repo.owner;
+        const repo = context.repo.repo;
+        core.debug(`Owner: ${owner}, Repo: ${repo}`);
+
+        // Get the pull request number from the context
+        const number = context.payload.pull_request.number;
+        core.debug(`Pull Request Number: ${number}`);
 
         // Fetch the pull request details
         const pullRequest = await octokit.pulls.get({ owner, repo, pull_number: number });
@@ -62,6 +65,7 @@ async function run() {
                 // Check if the comment already exists
                 const comments = await octokit.issues.listComments({ owner, repo, issue_number: number });
                 const existingComment = comments.data.find((comment) => comment.body === comment);
+                core.debug(`Existing Comment: ${existingComment ? 'Yes' : 'No'}`);
 
                 if (!existingComment) {
                     // Create a new comment
@@ -78,6 +82,7 @@ async function run() {
                 // Check if the comment already exists
                 const comments = await octokit.issues.listComments({ owner, repo, issue_number: number });
                 const existingComment = comments.data.find((comment) => comment.body.startsWith(commentMessage));
+                core.debug(`Existing Comment: ${existingComment ? 'Yes' : 'No'}`);
 
                 if (existingComment) {
                     // Delete the existing comment
