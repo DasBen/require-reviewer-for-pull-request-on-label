@@ -26,8 +26,10 @@ async function run() {
         // Get the Octokit client using the provided token
         const octokit = getOctokit(token);
 
-        // Get the owner, repo, and pull request number from the context
-        const { owner, repo, number } = context.issue;
+        // Get the owner, repo, and pull request number from the environment variables
+        const owner = process.env.GITHUB_REPOSITORY.split('/')[0];
+        const repo = process.env.GITHUB_REPOSITORY.split('/')[1];
+        const number = process.env.GITHUB_EVENT_NUMBER;
         core.debug(`Owner: ${owner}, Repo: ${repo}, Number: ${number}`);
 
         // Fetch the pull request details
