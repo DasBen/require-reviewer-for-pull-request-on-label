@@ -60,31 +60,31 @@ async function run() {
                 core.debug(`Comment: ${comment}`);
 
                 // Check if the comment already exists
-                const comments = await octokit.issues.listComments({ owner, repo, issue_number: number });
+                const comments = await octokit.rest.issues.listComments({ owner, repo, issue_number: number });
                 const existingComment = comments.data.find((comment) => comment.body === comment);
                 core.debug(`Existing Comment: ${existingComment ? 'Yes' : 'No'}`);
 
                 if (!existingComment) {
                     // Create a new comment
                     core.debug('Creating a new comment...');
-                    await octokit.issues.createComment({ owner, repo, issue_number: number, body: comment });
+                    await octokit.rest.issues.createComment({ owner, repo, issue_number: number, body: comment });
                 } else {
                     // Update the existing comment
                     core.debug('Updating the existing comment...');
-                    await octokit.issues.updateComment({ owner, repo, comment_id: existingComment.id, body: comment });
+                    await octokit.rest.issues.updateComment({ owner, repo, comment_id: existingComment.id, body: comment });
                 }
 
                 core.setFailed('Reviewers check failed.');
             } else {
                 // Check if the comment already exists
-                const comments = await octokit.issues.listComments({ owner, repo, issue_number: number });
+                const comments = await octokit.rest.issues.listComments({ owner, repo, issue_number: number });
                 const existingComment = comments.data.find((comment) => comment.body.startsWith(commentMessage));
                 core.debug(`Existing Comment: ${existingComment ? 'Yes' : 'No'}`);
 
                 if (existingComment) {
                     // Delete the existing comment
                     core.debug('Deleting the existing comment...');
-                    await octokit.issues.deleteComment({ owner, repo, comment_id: existingComment.id });
+                    await octokit.rest.issues.deleteComment({ owner, repo, comment_id: existingComment.id });
                 }
             }
         }
