@@ -15,4 +15,4 @@ inputs:
     required: false
 runs:
   using: 'node12'
-  main: 'check-reviewers.js'
+  main: 'action.js'
