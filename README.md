@@ -13,7 +13,7 @@ automatically provided by GitHub Actions.
 
 A comma-separated list of the required reviewers' usernames.
 
-### `labels` (required)
+### `required-labels` (required)
 
 A comma-separated list of the labels that trigger the reviewers check. The check will trigger as soon as one of these
 labels are present.
@@ -42,5 +42,5 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           required-reviewers: 'Reviewer1, Reviewer2'
-          labels: 'required-label1, required-label2'
+          required-labels: 'required-label1, required-label2'
           comment-message: 'Custom Error: Pull request requires at least one of the following reviewers'
