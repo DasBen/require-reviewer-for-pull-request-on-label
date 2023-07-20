@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
+const { getOctokit, context } = require('@actions/github');
 
 /**
  * Checks if a pull request has the required reviewers based on specified labels.
@@ -8,7 +8,6 @@ async function run() {
     try {
         // Get the GitHub token input
         const token = core.getInput('github-token');
-        core.debug(`GitHub Token: ${token}`);
 
         // Get the required reviewers input
         const requiredReviewersInput = core.getInput('required-reviewers');
@@ -25,10 +24,11 @@ async function run() {
         core.debug(`Comment Message: ${commentMessage}`);
 
         // Get the Octokit client using the provided token
-        const octokit = github.getOctokit(token);
+        const octokit = getOctokit(token);
 
         // Get the owner, repo, and pull request number from the context
-        const { owner, repo, number } = github.context.issue;
+        const { owner, repo, number } = context.issue;
+        core.debug(`Owner: ${owner}, Repo: ${repo}, Number: ${number}`);
 
         // Fetch the pull request details
         const pullRequest = await octokit.pulls.get({ owner, repo, pull_number: number });
@@ -85,6 +85,9 @@ async function run() {
             }
         }
     } catch (error) {
+        // Log the error message
+        console.error(error.message);
+
         // Set the action as failed
         core.setFailed(error.message);
     }
