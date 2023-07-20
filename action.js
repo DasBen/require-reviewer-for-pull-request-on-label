@@ -29,14 +29,11 @@ async function run() {
         // Get the owner and repo from the context
         const owner = context.repo.owner;
         const repo = context.repo.repo;
-        core.debug(`Owner: ${owner}, Repo: ${repo}`);
-
-        // Get the pull request number from the context
         const number = context.payload.pull_request.number;
-        core.debug(`Pull Request Number: ${number}`);
+        core.debug(`Owner: ${owner}, Repo: ${repo}, Pull Request Number ${number}`);
 
         // Fetch the pull request details
-        const pullRequest = await octokit.pulls.get({ owner, repo, pull_number: number });
+        const pullRequest = await octokit.rest.pulls.get({ owner, repo, pull_number: number });
         const labels = pullRequest.data.labels.map((label) => label.name);
         core.debug(`Pull Request Labels: ${labels.join(', ')}`);
 
