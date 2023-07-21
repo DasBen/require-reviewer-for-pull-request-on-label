@@ -2,7 +2,7 @@
   "name": "require-reviewer-for-pull-request-on-label",
   "version": "0.1.0",
   "description": "GitHub Action to require Reviewer after adding a label",
-  "main": "index.js",
+  "main": "action.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
