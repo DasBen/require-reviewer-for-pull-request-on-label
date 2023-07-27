@@ -75,18 +75,23 @@ async function run() {
                 }
 
                 core.setFailed('Reviewers check failed.');
-            } else {
-                // Check if the comment already exists
-                const comments = await octokit.rest.issues.listComments({ owner, repo, issue_number: number });
-                const existingComment = comments.data.find((comment) => comment.body.startsWith(commentMessage));
-                core.debug(`Existing Comment: ${existingComment ? 'Yes' : 'No'}`);
-
-                if (existingComment) {
-                    // Delete the existing comment
-                    core.debug('Deleting the existing comment...');
-                    await octokit.rest.issues.deleteComment({ owner, repo, comment_id: existingComment.id });
-                }
             }
+        }
+
+        /**
+         * Check if the comment already exists and remove it.
+         * This will happen on:
+         * 1. The pull request has all the required labels.
+         * 2. The pull request has been updated and now passes the check.
+         */
+        const comments = await octokit.rest.issues.listComments({ owner, repo, issue_number: number });
+        const existingComment = comments.data.find((comment) => comment.body.startsWith(commentMessage));
+        core.debug(`Existing Comment: ${existingComment ? 'Yes' : 'No'}`);
+
+        if (existingComment) {
+            // Delete the existing comment
+            core.debug('Deleting the existing comment...');
+            await octokit.rest.issues.deleteComment({ owner, repo, comment_id: existingComment.id });
         }
     } catch (error) {
         // Log the error message
