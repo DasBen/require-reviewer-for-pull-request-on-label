@@ -1,0 +1,28 @@
+# .github/workflows/check_pull_request.yml
+name: Check Pull-Request
+
+on:
+  pull_request:
+    types: [opened, reopened, labeled, unlabeled]
+
+jobs:
+  check_labels:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Check Release Labels
+        if: always()
+        id: release-labels
+        uses: mheap/github-action-required-labels@v5
+        with:
+          mode: exactly
+          count: 1
+          labels: "release:patch, release:minor, release:major"
+          add_comment: true
+          message: "This pull request was rejected due to missing release labels. \n
+          There must be exactly one of these labels: \n
+          - release:patch\n
+          - release:minor\n
+          - release:major"
