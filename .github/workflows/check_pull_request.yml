@@ -22,7 +22,7 @@ jobs:
           labels: "release:patch, release:minor, release:major"
           add_comment: true
           message: "This pull request was rejected due to missing release labels. \n
-          There must be exactly one of these labels: \n
-          - release:patch\n
-          - release:minor\n
-          - release:major"
+            There must be exactly one of these labels: \n
+            - release:patch\n
+            - release:minor\n
+            - release:major"
