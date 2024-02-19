@@ -2,7 +2,7 @@
   "name": "require-reviewer-for-pull-request-on-label",
   "version": "0.1.0",
   "description": "GitHub Action to require Reviewer after adding a label",
-  "main": "action.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest"
   },
@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "jest": "^29.6.3",
-    "nock": "^13.3.3",
-    "prettier": "^3.0.2"
+    "nock": "^13.5.1",
+    "prettier": "^3.2.5"
   }
 }

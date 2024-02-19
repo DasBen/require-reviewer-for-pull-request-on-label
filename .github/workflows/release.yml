@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Release Label einlesen
         id: release-label
@@ -51,4 +51,3 @@ jobs:
           generate_release_notes: true
           tag_name: ${{ steps.bump-semver.outputs.new_version }}
           name: ${{ steps.bump-semver.outputs.new_version }}
-
